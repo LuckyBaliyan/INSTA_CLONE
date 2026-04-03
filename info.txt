@@ -1,0 +1,15 @@
+==> Auth
+   ==>Register
+   ==>Login
+   ==>Logout
+   ==>Otp based registration
+
+==>POST
+   ==>create
+   ==>can see the feed
+   ==>like POST
+   ==>save POST
+
+==>USERS
+   ==>followers
+   ==>following
