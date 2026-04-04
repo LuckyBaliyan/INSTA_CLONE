@@ -1,7 +1,7 @@
 ==> Auth
    ==>Register
    ==>Login
-   ==>Logout
+   ==>Logout (token blacklisting)
    ==>Otp based registration
 
 ==>POST
@@ -13,3 +13,16 @@
 ==>USERS
    ==>followers
    ==>following
+
+
+USER{
+   name:String
+   email:String 
+   pass:String
+   bio:String
+   followers:array
+   profile_img:String 
+}
+
+use a cloud url provider we just uplaod img and generate url form there and rest
+will be handled by img kit and we can store that url in db
