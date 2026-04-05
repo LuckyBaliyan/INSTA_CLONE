@@ -1,39 +1,15 @@
 const postModel = require("../models/post.model");
 const ImageKit = require("@imagekit/nodejs");
 const {toFile} = require("@imagekit/nodejs");
-const jwt = require("jsonwebtoken");
 
 const imageKit = new ImageKit({
     privateKey:process.env.IMAGEKIT_PRIVATE_KEY
 })
 
 async function  createPostController (req, res) {
-    console.log(req.body, req.file);
 
-    const token = req.cookies.token;
-
-    //if we hav't get token form browser or old token (expired) i.e 
-    //either user not registered or he/she is not logged in right now!
-    if(!token){
-        res.status(401).json({
-            message:"Unauthorized acess please signup / login first!"
-        })
-    }
-
-    // if token is worng the server should respond with status 401 not 500 (default)
-    // to handle this
-    let decoded = null;
-    
-    try{
-       decoded = jwt.verify(token, process.env.JWT_SECRET);
-    }
-    catch(error){
-        return res.status(401).json({
-            message:"user not authorized for this action !"
-        })
-    }
-
-    console.log(decoded);
+    //taking the newly add req.user from middleware
+    const userId = req.user.id; // --> decoded.id
 
     const file = await imageKit.files.upload({
         file:await toFile(Buffer.from(req.file.buffer), 'file'),
@@ -45,7 +21,7 @@ async function  createPostController (req, res) {
     const post = await postModel.create({
         caption:req.body.caption,
         imgUrl:file.url,
-        user:decoded.id
+        user:userId
     })
 
     res.status(201).json({
@@ -54,4 +30,57 @@ async function  createPostController (req, res) {
     });
 }
 
-module.exports = {createPostController};
+//fetch all posts by logged in user
+async function getPostController(req,res){
+
+    const userId = req.user.id; // --> decoded.id
+    //Now return all the post of user having user:userId
+
+    //find will fetch all meanwhile findOne fecths fist 
+    const posts = await postModel.find({
+        user:userId
+    });
+
+    res.status(201).json({
+        message:"Posts fetched Sucessfully!",
+        posts:posts
+    });
+}
+
+/**
+ * GET api/posts/details/:postId 
+ * - return details about specific post with the id. also check whether the post 
+ * belongs to the user that request for the post 
+*/
+
+async function getPostDetailsController(req,res){
+
+    const userId = req.user.id; // --> decoded.id
+    const postId = req.params.postId;
+
+    const post = await postModel.findById(postId);
+
+    if(!post){
+        return res.status(404).json({
+            message:"Post Not Found!"
+        })
+    }
+
+    //these are the object id's and in js they are not compared like this
+    // we can used equals method because the objects are refrenced types in js and their 
+    // inner properties can't be checked use strict equality (===)
+    const isValidUser = post.user.equals(userId);
+
+    if(!isValidUser){
+        return res.status(403).json({
+           message:"Forbidden Content for the current user!"
+        })
+    }
+
+    return res.status(200).json({
+       message:"Post Fetched Sucessfully !",
+       post : post
+    });
+}
+
+module.exports = {createPostController, getPostController, getPostDetailsController};

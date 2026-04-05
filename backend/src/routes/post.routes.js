@@ -6,12 +6,17 @@ const upload = multer({storage:multer.memoryStorage()});
 
 const postController = require("../controllers/post.controller")
 
+const verifyUser = require("../middlewares/auth.middleware")
+
 /**
  * POST /api/posts [protected] only those user's can acess having a valid token
  * - req.body = {caption, image-file} 
 */
 
-postRouter.post("/",upload.single("image"),postController.createPostController);
+postRouter.post("/",upload.single("image"), verifyUser ,postController.createPostController);
+postRouter.get("/", verifyUser, postController.getPostController);
+postRouter.get("/details/:postId", verifyUser, postController.getPostDetailsController);
+
 
 module.exports = postRouter;
 
