@@ -18,5 +18,13 @@ postRouter.get("/", verifyUser, postController.getPostController);
 postRouter.get("/details/:postId", verifyUser, postController.getPostDetailsController);
 
 
+/**
+ * @route POST /api/posts/like/:postId
+ * @description like a post with the id provided in the req params 
+*/
+
+postRouter.post("/like/:postId", verifyUser, postController.likePostController);
+
+
 module.exports = postRouter;
 

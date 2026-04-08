@@ -11,6 +11,15 @@ const followSchema = new mongo.Schema({
         ref:"users",
         required:[true, "Followee is required!"]
     },
+    status:{
+        type:String,
+        default:"pending",
+        //enum prevents to apply any different value other then these 3 
+        enum:{
+            values:["pending", "accepted", "rejected"],
+            message:"status can only be pending, accepted or rejected"
+        }
+    }
 },{timestamps:true}
 );
 

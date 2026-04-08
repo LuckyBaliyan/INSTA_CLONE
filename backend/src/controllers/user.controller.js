@@ -39,13 +39,127 @@ async function followUserController(req, res){
     });
 
     res.status(201).json({
-        message:`You are now following ${followeeUserName}`,
+        message:`Requested to follow ${followeeUserName}`,
         follow: followRecord
     });
 }
 
 async function unfollowUserController(req, res){
+    const followerUserName = req.user.userName;
+    const followeeUserName = req.params.userName;
+
+    const isUserFollowing  = await followModel.findOne({
+        follower: followerUserName,
+        followee: followeeUserName,
+        status:"accepted"
+    });
+
+    if(!isUserFollowing){
+        return  res.status(200).json({
+            message:`You ar't following ${followeeUserName}`
+        })
+    }
+
+    await followModel.findByIdAndDelete(isUserFollowing._id);
+
+    res.status(200).json({
+        message:`You have unfollowed ${followeeUserName}`
+    });
 
 }
 
-module.exports = { followUserController };
+/**
+ * @route POST /api/users/follow/:userName
+ * @description accept the follow req of a user 
+*/
+
+async function acceptFollowController(req,res){
+    const followeeUserName = req.user.userName;
+    const followerUserName = req.params.userName;
+
+    const request = await followModel.findOne({
+        follower:followerUserName,
+        followee:followeeUserName
+    })
+
+    if(!request){
+        return res.status(404).json({
+            message:"Request not found!"
+        })
+    }
+
+    request.status = "accepted";
+    await request.save();
+
+    res.status(200).json({
+        message:`Accepted the follow Request of ${followerUserName}`
+    })
+}
+
+/**
+ * @routes POST /api/users/reject/:userName
+ * @description reject incoming request form req.prams.userName
+*/
+
+async function rejectFollowController(req, res){
+    const followeeUserName = req.user.userName;
+    const followerUserName = req.params.userName;
+
+    const request = await followModel.findOne({
+        follower: followerUserName,
+        followee: followeeUserName
+    });
+
+    if(!request){
+        return res.status(404).json({
+            message:"Request not found"
+        });
+    }
+
+    request.status = "rejected";
+    await request.save();
+
+    res.status(200).json({
+        message:`You rejected ${followerUserName}'s request`
+    });
+}
+
+
+/**
+ * @routes GET /api/users/follow/req 
+*/
+
+
+async function getFollowRequestsController(req, res){
+    try{
+        const userName = req.user.userName;
+
+        const requests = await followModel.find({
+            followee: userName,
+            status: "pending"
+        }).select("follower status createdAt");
+
+        if(requests.length === 0){
+            return res.status(200).json({
+                message: "No follow requests",
+                data: []
+            });
+        }
+
+        res.status(200).json({
+            count: requests.length,
+            data: requests
+        });
+
+    }catch(err){
+        res.status(500).json({
+            error: err.message
+        });
+    }
+}
+
+module.exports = { 
+    followUserController, unfollowUserController, 
+    acceptFollowController, rejectFollowController,
+    getFollowRequestsController
+};

@@ -11,6 +11,11 @@ const verifyUser = require("../middlewares/auth.middleware");
 */
 
 userRouter.post("/follow/:userName", verifyUser, userController.followUserController);
+userRouter.post("/unfollow/:userName", verifyUser, userController.unfollowUserController);
+userRouter.post("/accept/:userName", verifyUser, userController.acceptFollowController);
+userRouter.post("/reject/:userName", verifyUser, userController.rejectFollowController);
+userRouter.get("/follow/req", verifyUser, userController.getFollowRequestsController);
+
 
 
 module.exports = userRouter;
