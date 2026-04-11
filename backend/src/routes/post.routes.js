@@ -24,6 +24,8 @@ postRouter.get("/details/:postId", verifyUser, postController.getPostDetailsCont
 */
 
 postRouter.post("/like/:postId", verifyUser, postController.likePostController);
+postRouter.post("/unlike/:postId", verifyUser, postController.unlikePostController);
+
 
 
 /**

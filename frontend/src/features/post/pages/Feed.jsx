@@ -8,7 +8,7 @@ import Nav from '../../../components/nav/Nav';
 
 const Feed = () => {
 
-  const {feed, loading, handleGetFeed} = usePost();
+  const {feed, loading, handleGetFeed, handleLike, handleUnLike} = usePost();
 
   useEffect(()=>{
     handleGetFeed();
@@ -31,7 +31,8 @@ const Feed = () => {
             {
               feed.map((post, index)=>(
                 //handle the case of same string id then use mongo._id or index
-                <Post key={post._id || post.id || index} user={post.user} post={post}/>
+                <Post key={post._id || post.id || index} user={post.user} post={post}
+                loading={loading} handleLike={handleLike} handleUnLike={handleUnLike}/>
               ))
             }
         </div>

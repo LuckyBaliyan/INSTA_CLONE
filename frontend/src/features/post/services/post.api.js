@@ -23,3 +23,13 @@ export async function createPost(file,caption){
 
    return res.data;
 }
+
+export async function likePost(postId){
+    const res = await api.post(`/api/posts/like/${postId}`);
+    return res.data;
+}
+
+export async function unlikePost(postId){
+    const res = await api.post(`/api/posts/unlike/${postId}`);
+    return res.data;
+}

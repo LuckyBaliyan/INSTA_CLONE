@@ -1,4 +1,4 @@
-import { createPost, getFeed } from "../services/post.api";
+import { createPost, getFeed, likePost, unlikePost } from "../services/post.api";
 import { useContext, useEffect } from "react";
 import { PostContext } from "../post.context";
 
@@ -25,10 +25,20 @@ export const usePost = ()=>{
    //this was comming beacuse when are desturcturing feed even before fetching as
    // we create post and then navigate cause refetching and feed was not initially [] 
    // it was null which breaks 
-   
+
    /*useEffect(()=>{
      handleGetFeed();
    },[])*/
 
-   return {loading, feed, posts, handleGetFeed, handleCreatePost};
+   const handleLike = async (post)=>{
+      const data = await likePost(post);
+      await handleGetFeed();
+   }
+
+   const handleUnLike = async (post)=>{
+      const data = await unlikePost(post);
+      await handleGetFeed();
+   }
+
+   return {loading, feed, posts, handleGetFeed, handleCreatePost, handleLike, handleUnLike};
 }

@@ -40,11 +40,11 @@ export const CreatePost = () => {
         <div className="form-container">
             <h1>Create Post</h1>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="postImage" className={'post-image-label'}>
+                <label  htmlFor="postImage" className={'post-image-label'}>
                     <ImageUploadSkeleton hasImage={!!imageFile} fileName={imageFile?.name} />
                 </label>
-                <input type="file" name="postImage" id="postImage" hidden onChange={handleImageChange}/>
-                <input value={caption} onChange={(e)=>setCaption(e.target.value)} type="text" name="caption" id="caption" placeholder='enter caption'/>
+                <input required type="file" name="postImage" id="postImage" hidden onChange={handleImageChange}/>
+                <input required value={caption} onChange={(e)=>setCaption(e.target.value)} type="text" name="caption" id="caption" placeholder='enter caption'/>
                 <button className="button primary-btn">Create Post</button>
             </form>
         </div>

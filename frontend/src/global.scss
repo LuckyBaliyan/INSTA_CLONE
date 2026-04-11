@@ -19,3 +19,24 @@ body{
   color:#fff;
   position: relative;
 }
+
+
+
+.primary-btn{
+  border: none;
+  outline: none;
+  padding-inline: 1.5rem;
+  padding-block: 1rem;
+  border-radius: 1rem;
+  background-color: #bd0c23;
+  color:whitesmoke;
+  cursor: pointer;
+}
+
+.home{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap:0.5rem;
+}

@@ -7,7 +7,7 @@ const Nav = () => {
 
   return (
     <nav className='nav-bar'>
-        <p>Insta</p>
+        <p onClick={()=>navigate("/")}>Insta</p>
         <button onClick={()=>navigate("/createPost")} className='btn primary-btn'>new post</button>
     </nav>
   )
