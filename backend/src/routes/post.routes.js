@@ -26,5 +26,13 @@ postRouter.get("/details/:postId", verifyUser, postController.getPostDetailsCont
 postRouter.post("/like/:postId", verifyUser, postController.likePostController);
 
 
+/**
+ * @route GET /api/posts/ 
+ * @description GET all the posts from any user 
+*/
+
+postRouter.get("/feed", verifyUser, postController.getFeedController);
+
+
 module.exports = postRouter;
 

@@ -1,0 +1,86 @@
+.feed-page{
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    .feed{
+        max-width: 350px;
+        width:100%;
+
+        .posts{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap:0.8rem;
+        }
+
+        .post{
+            display: flex;
+            flex-direction: column;
+            gap:0.5rem;
+            background-color: #272626;
+            width: 100%;
+            padding-inline: 0.5rem;
+            padding-block: 0.5rem;
+            border-radius: .3em;
+
+            .user{
+                display: flex;
+                gap:0.5rem;
+                align-items: center;
+
+                .img-wrapper{
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: 3px solid transparent;
+                    background: conic-gradient(from 45deg,  #feda75,#fa7e1e,#d62976,
+                    #962fbf,#4f5bd5,#feda75) border-box;
+                }
+
+                img{
+                    width:2rem;
+                    border-radius: 50%;
+                    aspect-ratio: 1;
+                    object-fit: cover;
+                }
+            }
+
+            img{
+                width:100%;
+                object-fit: cover;
+            }
+
+            .post-img{
+                min-height: 400px;
+            }
+
+            .icons{
+
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .left{
+                    display: flex;
+                    gap:0.5rem;
+                }
+
+                svg{
+                    width:1.3rem;
+                    aspect-ratio: 1;
+                    color:#fff;
+                    cursor: pointer;
+                }
+
+                button{
+                    background-color: transparent;
+                    border: none;
+                    outline: none;
+                }
+            }
+        }
+    }
+}

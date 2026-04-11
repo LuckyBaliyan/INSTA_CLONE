@@ -100,6 +100,18 @@ async function loginController (req, res){
      * password
     */
 
+    if (!password) {
+        return res.status(400).json({
+            message: "Password is required"
+        });
+    }
+
+    if (!userName && !email) {
+        return res.status(400).json({
+            message: "UserName or Email is required"
+        });
+    }
+
     const user = await userModel.findOne({
         /* Array of conditions */
         $or:[
@@ -110,7 +122,7 @@ async function loginController (req, res){
               email:email
             }
         ]
-    })
+    }).select("+password");
 
     if(!user){
         return res.status(404).json({
