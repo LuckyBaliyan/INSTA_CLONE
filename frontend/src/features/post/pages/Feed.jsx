@@ -4,6 +4,7 @@ import Post from '../components/Post';
 import { usePost } from '../hooks/usePost';
 import { useEffect } from 'react';
 import Loader from '../../../components/comman/Loader';
+import Nav from '../../../components/nav/Nav';
 
 const Feed = () => {
 
@@ -24,6 +25,7 @@ const Feed = () => {
 
   return (
    <main className='feed-page'>
+    <Nav />
      <div className="feed">
         <div className="posts">
             {

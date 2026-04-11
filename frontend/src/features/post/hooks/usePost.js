@@ -1,5 +1,5 @@
-import { getFeed } from "../services/post.api";
-import { useContext } from "react";
+import { createPost, getFeed } from "../services/post.api";
+import { useContext, useEffect } from "react";
 import { PostContext } from "../post.context";
 
 export const usePost = ()=>{
@@ -14,5 +14,21 @@ export const usePost = ()=>{
       setLoading(false);
    }
 
-   return {loading, feed, posts, handleGetFeed};
+   const handleCreatePost = async (imageFile, caption) =>{
+      setLoading(true);
+      const data = await createPost(imageFile, caption);
+      setFeed([data.post, ...feed]);
+      setLoading(false);
+   }
+
+   //hydartion of feed don't neede we use [] instead of null in useState of feed
+   //this was comming beacuse when are desturcturing feed even before fetching as
+   // we create post and then navigate cause refetching and feed was not initially [] 
+   // it was null which breaks 
+   
+   /*useEffect(()=>{
+     handleGetFeed();
+   },[])*/
+
+   return {loading, feed, posts, handleGetFeed, handleCreatePost};
 }

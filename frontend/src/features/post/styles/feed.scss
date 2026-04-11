@@ -1,11 +1,13 @@
 .feed-page{
-
+    
+    margin-top: 4rem;
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
 
     .feed{
-        max-width: 350px;
+        max-width: 400px;
         width:100%;
 
         .posts{
@@ -18,9 +20,11 @@
         .post{
             display: flex;
             flex-direction: column;
+            justify-content: space-evenly;
             gap:0.5rem;
-            background-color: #272626;
+            background-color: #760413;
             width: 100%;
+            min-height: 100vh;
             padding-inline: 0.5rem;
             padding-block: 0.5rem;
             border-radius: .3em;
@@ -54,7 +58,8 @@
             }
 
             .post-img{
-                min-height: 400px;
+                //min-height: 450px;
+                flex-grow: 2;
             }
 
             .icons{
@@ -69,10 +74,15 @@
                 }
 
                 svg{
-                    width:1.3rem;
+                    width:1.5rem;
                     aspect-ratio: 1;
                     color:#fff;
                     cursor: pointer;
+                }
+
+                svg.liked{
+                    color:#d62976;
+                    fill:#d62976;
                 }
 
                 button{

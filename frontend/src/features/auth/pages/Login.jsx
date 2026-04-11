@@ -33,7 +33,7 @@ const Login = () => {
     try {
       await handleLogin(userName, password).then(res=>{
         console.log(res.data);
-        navigate("/");
+        navigate("/feed");
       });
     } catch (err) {
       console.log(err);

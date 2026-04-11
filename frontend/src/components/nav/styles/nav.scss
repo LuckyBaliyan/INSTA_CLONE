@@ -1,0 +1,30 @@
+.nav-bar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding-inline:2rem;
+    padding-block: 1rem;
+    position: fixed;
+    top:0;
+    left:0;
+    
+    p{
+        font-size: 20px;
+        font-weight: 500;
+        text-transform: uppercase;
+        color:#bd0c23;
+    }
+
+    
+    button{
+        border: none;
+        outline: none;
+        padding-inline: 1.5rem;
+        padding-block: 1rem;
+        border-radius: 1rem;
+        background-color: #bd0c23;
+        color:whitesmoke;
+        cursor: pointer;
+    }
+}
